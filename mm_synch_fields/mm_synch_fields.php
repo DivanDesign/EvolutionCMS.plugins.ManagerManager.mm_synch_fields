@@ -55,7 +55,18 @@ function mm_synch_fields($params){
 	
 	$e = &$modx->Event;
 	
-	if ($e->name == 'OnDocFormRender'){
+	if ($e->name == 'OnDocFormPrerender'){
+		//The main js file including
+		$output = includeJsCss(
+			$modx->getConfig('site_url') .
+			'assets/plugins/managermanager/widgets/mm_synch_fields/jQuery.ddMM.mm_synch_fields.js',
+			'html',
+			'jQuery.ddMM.mm_synch_fields',
+			'1.0'
+		);
+		
+		$e->output($output);
+	}else if ($e->name == 'OnDocFormRender'){
 		$params->fields = getTplMatchedFields(
 			$params->fields,
 			//Make sure we're dealing with an input
@@ -77,26 +88,17 @@ function mm_synch_fields($params){
 		
 		$output .=
 '
-var $mm_synch_fields = $j.ddMM.getFieldElems({
-	fields: ' .
-		\DDTools\ObjectTools::convertType([
-			'object' => $params->fields,
-			'type' => 'stringJsonArray'
-		]) .
-	'
-});
-
-$mm_synch_fields.on(
-	"keyup",
-	function(){
-		var $this = $j(this);
-		
-		$mm_synch_fields
-			.not($this)
-			.val($this.val())
-		;
-	}
-);
+$j.ddMM
+	.getFieldElems({
+		fields: ' .
+			\DDTools\ObjectTools::convertType([
+				'object' => $params->fields,
+				'type' => 'stringJsonArray'
+			]) .
+		'
+	})
+	.mm_synch_fields()
+;
 '
 			;
 		;

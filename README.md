@@ -66,6 +66,7 @@ You may also read this documentation:
 
 ### CMS events
 
+* `OnDocFormPrerender`
 * `OnDocFormRender`
 
 

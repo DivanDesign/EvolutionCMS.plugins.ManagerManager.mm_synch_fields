@@ -67,6 +67,7 @@
 
 ### События CMS
 
+* `OnDocFormPrerender`
 * `OnDocFormRender`
 
 
