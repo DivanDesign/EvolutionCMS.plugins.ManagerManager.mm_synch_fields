@@ -16,7 +16,7 @@ Works only with the text inputs (`input`, `textarea`).
 
 ### Installation
 
-To install you must unzip the archive to `/assets/plungins/managermanager/widgets/`.
+To install you must unzip the archive to `/assets/plungins/managermanager/widgets/mm_synch_fields/`.
 
 
 You may also read this documentation:
