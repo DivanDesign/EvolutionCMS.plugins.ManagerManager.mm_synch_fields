@@ -8,7 +8,7 @@ Works only with the text inputs (`input`, `textarea`).
 ## Requires
 
 * PHP >= 5.4
-* [(MODX)EvolutionCMS.plugins.ManagerManager](https://code.divandesign.biz/modx/managermanager) >= 0.4
+* [(MODX)EvolutionCMS.plugins.ManagerManager](https://code.divandesign.biz/modx/managermanager) >= 0.7
 
 
 ## Documentation
@@ -26,32 +26,39 @@ You may also read this documentation:
 
 ### Parameters description
 
-* `$fields`
+* `$params`
+	* Desctription: Parameters, the pass-by-name style is used.
+	* Valid values:
+		* `stdClass`
+		* `arrayAssociative`
+	* **Required**
+	
+* `$params->fields`
 	* Desctription: The names of document fields or TVs that should be synched.  
 		Requires a minimum of 2 field names.
 	* Valid values: `stringCommaSeparated`
 	* **Required**
 	
-* `$roles`
+* `$params->roles`
 	* Desctription: The CMS user roles that the widget is applied to.
 	* Valid values:
 		* `stringCommaSeparated`
 		* `''` — when this parameter is empty then widget is applied to the all roles
 	* Default value: `''`
 	
-* `$roles[i]`
+* `$params->roles[i]`
 	* Desctription: CMS user role.
 	* Valid values: `integer`
 	* **Required**
 	
-* `$templates`
+* `$params->templates`
 	* Desctription: Document templates IDs for which the widget is applying to.
 	* Valid values:
 		* `stringCommaSeparated`
 		* `''` — empty value means the widget is applying to all templates
 	* Default value: `''`
 	
-* `$templates[i]`
+* `$params->templates[i]`
 	* Desctription: Templates ID.
 	* Valid values: `integer`
 	* **Required**

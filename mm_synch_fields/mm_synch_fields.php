@@ -10,11 +10,45 @@
  * @copyright 2012 DD Group {@link https://DivanDesign.biz }
  */
 
-function mm_synch_fields(
-	$fields,
-	$roles = '',
-	$templates = ''
-){
+function mm_synch_fields($params){
+	//For backward compatibility
+	if (
+		!is_array($params) &&
+		!is_object($params)
+	){
+		//Convert ordered list of params to named
+		$params = \ddTools::orderedParamsToNamed([
+			'paramsList' => func_get_args(),
+			'compliance' => [
+				'fields',
+				'roles',
+				'templates'
+			]
+		]);
+	}
+	
+	//Defaults
+	$params = \DDTools\ObjectTools::extend([
+		'objects' => [
+			(object) [
+				'fields' => '',
+				'roles' => '',
+				'templates' => ''
+			],
+			$params
+		]
+	]);
+	
+	if (
+		//If the current page is being edited by someone in the list of roles, and uses a template in the list of templates
+		!useThisRule(
+			$params->roles,
+			$params->templates
+		)
+	){
+		return;
+	}
+	
 	global
 		$modx,
 		$mm_fields
@@ -23,21 +57,14 @@ function mm_synch_fields(
 	$e = &$modx->Event;
 	
 	//if we've been supplied with a string, convert it into an array
-	$fields = makeArray($fields);
+	$params->fields = makeArray($params->fields);
 	
 	//We need at least 2 values
-	if (count($fields) < 2){
+	if (count($params->fields) < 2){
 		return;
 	}
 	
-	if (
-		$e->name == 'OnDocFormRender' &&
-		//If the current page is being edited by someone in the list of roles, and uses a template in the list of templates
-		useThisRule(
-			$roles,
-			$templates
-		)
-	){
+	if ($e->name == 'OnDocFormRender'){
 		$output =
 			'//---------- mm_synch_fields :: Begin -----' .
 			PHP_EOL
@@ -49,7 +76,7 @@ function mm_synch_fields(
 		;
 		
 		foreach (
-			$fields as
+			$params->fields as
 			$field
 		){
 			if (isset($mm_fields[$field])){
