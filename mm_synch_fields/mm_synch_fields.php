@@ -62,7 +62,7 @@ function mm_synch_fields($params){
 			'assets/plugins/managermanager/widgets/mm_synch_fields/jQuery.ddMM.mm_synch_fields.js',
 			'html',
 			'jQuery.ddMM.mm_synch_fields',
-			'1.0'
+			'1.1'
 		);
 		
 		$e->output($output);
