@@ -76,47 +76,30 @@ function mm_synch_fields($params){
 		;
 		
 		$output .=
-			'synch_field[mm_sync_field_count] = new Array();' .
-			PHP_EOL
+'
+var $mm_synch_fields = $j.ddMM.getFieldElems({
+	fields: ' .
+		\DDTools\ObjectTools::convertType([
+			'object' => $params->fields,
+			'type' => 'stringJsonArray'
+		]) .
+	'
+});
+
+$mm_synch_fields.on(
+	"keyup",
+	function(){
+		var $this = $j(this);
+		
+		$mm_synch_fields
+			.not($this)
+			.val($this.val())
 		;
-		
-		foreach (
-			$params->fields as
-			$field
-		){
-			//Add this field to the array of fields being synched
-			$output .=
-				'synch_field[mm_sync_field_count].push($j.ddMM.fields.' . $field . '.$elem);' .
-				PHP_EOL
-			;
-		}
-		
-		// Output some javascript to sync these fields
-		$output .= '
-$j.each(
-	synch_field[mm_sync_field_count],
-	function(
-		i,
-		n
-	){
-		$j.each(
-			synch_field[mm_sync_field_count],
-			function(
-				j,
-				m
-			){
-				if (i != j){
-					n.keyup(function(){
-						m.val($j(this).val());
-					});
-				}
-			}
-		);
 	}
 );
-
-mm_sync_field_count++;
-		';
+'
+			;
+		;
 		
 		$output .=
 			'//---------- mm_synch_fields :: End -----' .
