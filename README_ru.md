@@ -9,7 +9,7 @@
 ## Использует
 
 * PHP >= 5.4
-* [(MODX)EvolutionCMS.plugins.ManagerManager](https://code.divandesign.biz/modx/managermanager) >= 0.4
+* [(MODX)EvolutionCMS.plugins.ManagerManager](https://code.divandesign.biz/modx/managermanager) >= 0.7
 
 
 ## Документация
@@ -17,7 +17,7 @@
 
 ### Установка
 
-Для установки распакуйте архив в `/assets/plungins/managermanager/widgets/`.
+Для установки распакуйте архив в `/assets/plungins/managermanager/widgets/mm_synch_fields/`.
 
 
 Смотрите также документацию:
@@ -27,32 +27,39 @@
 
 ### Описание параметров
 
-* `$fields`
+* `$params`
+	* Описание: Параметры, используется стиль именованных параметров.
+	* Допустимые значения:
+		* `stdClass`
+		* `arrayAssociative`
+	* **Обязателен**
+	
+* `$params->fields`
 	* Описание: Поля документа (или TV), которые необходимо синхронизировать.  
 		Необходимо задать минимум 2 поля.
 	* Допустимые значения: `stringCommaSeparated`
 	* **Обязателен**
 	
-* `$roles`
+* `$params->roles`
 	* Описание: Роли пользователей CMS, для которых необходимо применить виждет.
 	* Допустимые значения:
 		* `stringCommaSeparated`
 		* `''` — применяется для всех ролей при пустом значении.
 	* Значение по умолчанию: `''`
 	
-* `$roles[i]`
+* `$params->roles[i]`
 	* Desctription: Роль пользователя CMS.
 	* Valid values: `integer`
 	* **Required**
 	
-* `$templates`
+* `$params->templates`
 	* Описание: ID шаблонов документов, для которых необходимо применить виджет
 	* Допустимые значения:
 		* `stringCommaSeparated`
 		* `''` — применяется для всех шаблонов при пустом значении
 	* Значение по умолчанию: `''`
 	
-* `$templates[i]`
+* `$params->templates[i]`
 	* Desctription: ID шаблона документа.
 	* Valid values: `integer`
 	* **Required**
@@ -60,6 +67,7 @@
 
 ### События CMS
 
+* `OnDocFormPrerender`
 * `OnDocFormRender`
 
 
