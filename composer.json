@@ -1,6 +1,6 @@
 {
 	"name": "dd/evolutioncms-plugins-managermanager-mm_synch_fields",
-	"version": "1.1",
+	"version": "1.2",
 	"description": "Widget for ManagerManager plugin that allows a few fields values to be synchronized while editing the document. E. g. it`s required that page title and menu title have the same value. It's especially useful when some values being synchronized are hidden.",
 	"keywords": [
 		"modx",

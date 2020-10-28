@@ -1,13 +1,13 @@
 <?php
 /**
  * mm_synch_fields
- * @version 1.1 (2012-11-13)
+ * @version 1.2 (2020-10-28)
  * 
  * @see README.md
  * 
  * @link https://code.divandesign.biz/modx/mm_synch_fields
  * 
- * @copyright 2012 DD Group {@link https://DivanDesign.biz }
+ * @copyright 2012–2020 DD Group {@link https://DivanDesign.biz }
  */
 
 function mm_synch_fields($params){
