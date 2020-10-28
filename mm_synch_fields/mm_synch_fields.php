@@ -50,21 +50,26 @@ function mm_synch_fields($params){
 	}
 	
 	global
-		$modx,
-		$mm_fields
+		$modx
 	;
 	
 	$e = &$modx->Event;
 	
-	//if we've been supplied with a string, convert it into an array
-	$params->fields = makeArray($params->fields);
-	
-	//We need at least 2 values
-	if (count($params->fields) < 2){
-		return;
-	}
-	
 	if ($e->name == 'OnDocFormRender'){
+		$params->fields = getTplMatchedFields(
+			$params->fields,
+			//Make sure we're dealing with an input
+			'text,email,textarea'
+		);
+		
+		if (
+			$params->fields === false ||
+			//We need at least 2 values
+			count($params->fields) < 2
+		){
+			return;
+		}
+		
 		$output =
 			'//---------- mm_synch_fields :: Begin -----' .
 			PHP_EOL
@@ -79,34 +84,11 @@ function mm_synch_fields($params){
 			$params->fields as
 			$field
 		){
-			if (isset($mm_fields[$field])){
-				$fieldtype = $mm_fields[$field]['fieldtype'];
-				$fieldname = $mm_fields[$field]['fieldname'];
-				
-				$valid_fieldtypes = array(
-					'input',
-					'textarea'
-				);
-				
-				//Make sure we're dealing with an input
-				if (
-					!in_array(
-						$fieldtype,
-						$valid_fieldtypes
-					)
-				){
-					break;
-				}
-				
-				//Add this field to the array of fields being synched
-				$output .= '
-					synch_field[mm_sync_field_count].push($j("' . $fieldtype . '[name=' . $fieldname . ']"));
-				';
-				
-			//Or we don't recognise it
-			}else{
-				break;
-			}
+			//Add this field to the array of fields being synched
+			$output .=
+				'synch_field[mm_sync_field_count].push($j.ddMM.fields.' . $field . '.$elem);' .
+				PHP_EOL
+			;
 		}
 		
 		// Output some javascript to sync these fields
