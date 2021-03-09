@@ -66,7 +66,7 @@ function mm_synch_fields($params){
 		);
 		
 		$e->output($output);
-	}else if ($e->name == 'OnDocFormRender'){
+	}elseif ($e->name == 'OnDocFormRender'){
 		$params->fields = getTplMatchedFields(
 			$params->fields,
 			//Make sure we're dealing with an input
