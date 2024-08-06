@@ -11,12 +11,12 @@
  */
 
 function mm_synch_fields($params){
-	//For backward compatibility
+	// For backward compatibility
 	if (
 		!is_array($params) &&
 		!is_object($params)
 	){
-		//Convert ordered list of params to named
+		// Convert ordered list of params to named
 		$params = \ddTools::orderedParamsToNamed([
 			'paramsList' => func_get_args(),
 			'compliance' => [
@@ -27,7 +27,7 @@ function mm_synch_fields($params){
 		]);
 	}
 	
-	//Defaults
+	// Defaults
 	$params = \DDTools\ObjectTools::extend([
 		'objects' => [
 			(object) [
@@ -40,7 +40,7 @@ function mm_synch_fields($params){
 	]);
 	
 	if (
-		//If the current page is being edited by someone in the list of roles, and uses a template in the list of templates
+		// If the current page is being edited by someone in the list of roles, and uses a template in the list of templates
 		!useThisRule(
 			$params->roles,
 			$params->templates
@@ -56,7 +56,7 @@ function mm_synch_fields($params){
 	$e = &$modx->Event;
 	
 	if ($e->name == 'OnDocFormPrerender'){
-		//The main js file including
+		// The main js file including
 		$output = includeJsCss(
 			$modx->getConfig('site_url') .
 			'assets/plugins/managermanager/widgets/mm_synch_fields/jQuery.ddMM.mm_synch_fields.js',
@@ -69,20 +69,20 @@ function mm_synch_fields($params){
 	}elseif ($e->name == 'OnDocFormRender'){
 		$params->fields = getTplMatchedFields(
 			$params->fields,
-			//Make sure we're dealing with an input
+			// Make sure we're dealing with an input
 			'text,email,textarea'
 		);
 		
 		if (
 			$params->fields === false ||
-			//We need at least 2 values
+			// We need at least 2 values
 			count($params->fields) < 2
 		){
 			return;
 		}
 		
 		$output =
-			'//---------- mm_synch_fields :: Begin -----' .
+			'// ---------- mm_synch_fields :: Begin -----' .
 			PHP_EOL
 		;
 		
@@ -104,7 +104,7 @@ $j.ddMM
 		;
 		
 		$output .=
-			'//---------- mm_synch_fields :: End -----' .
+			'// ---------- mm_synch_fields :: End -----' .
 			PHP_EOL
 		;
 		
